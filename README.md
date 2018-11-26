@@ -24,3 +24,17 @@ To enable and start the thermal daemon:
 ```
 $ sudo systemctl enable --now i8kmon.service
 ```
+
+### i8k module
+
+The i8kmon thermal daemon relies on the `i8k` module, so make sure it's loaded properly. To load it at boot:
+
+```
+$ sudo tee /etc/modules-load.d/i8k.conf <<<i8k
+```
+
+On some machines (like Dell XPS 15 9570) you need to set the option to force the loading of the module (apparentely is not supported):
+
+```
+$ sudo tee /etc/modprobe.d/i8k.conf <<<"options i8k force=1"
+```
