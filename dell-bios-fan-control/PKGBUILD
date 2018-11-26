@@ -1,0 +1,26 @@
+# Maintainer: michelesr <michelesr@autistici.org>
+pkgname=dell-bios-fan-control
+pkgver=20180521.a2c81a2
+pkgrel=1
+pkgdesc="Tool to enable/disable BIOS fan control on Dell machines"
+arch=('x86_64')
+url="https://github.com/TomFreudenberg/dell-bios-fan-control/"
+depends=('gcc')
+source=("git://github.com/TomFreudenberg/dell-bios-fan-control.git")
+
+sha1sums=('SKIP')
+
+pkgver() {
+  cd ${pkgname}
+  git log -1 --format='%cd.%h' --date=short | tr -d -
+}
+
+build() {
+  cd $pkgname
+  make
+}
+
+package() {
+  cd $pkgname
+  install -Dm 755 dell-bios-fan-control "$pkgdir/usr/bin/dell-bios-fan-control"
+}
