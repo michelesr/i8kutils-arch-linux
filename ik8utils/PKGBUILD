@@ -10,10 +10,12 @@ depends=('bash' 'dell-bios-fan-control')
 optdepends=('tcl: for i8kmon daemon' 'acpi: for i8kmon daemon')
 backup=('etc/i8kutils/i8kmon.conf')
 source=(https://launchpad.net/i8kutils/trunk/${pkgver}/+download/i8kutils_${pkgver}.tar.xz
-        i8kmon.service)
+        i8kmon.service
+        restart-i8kmon.sh)
 
 sha1sums=('46204f9a567bbbc2267d67269c5bbbfad4187799'
-          '4fd005837ee4298aa48fb7597806e9bc2fc760d3')
+          '4fd005837ee4298aa48fb7597806e9bc2fc760d3'
+          '498e1712d35eaa99bd241ed8364451978fef70a9')
 
 prepare() {
   cd $pkgname
@@ -41,5 +43,5 @@ package() {
   install -D -m644 dell-smm-hwmon.conf "$pkgdir/etc/modprobe.d/dell-smm-hwmon.conf"
   install -D -m644 modules-load.d-dell-smm-hwmon.conf "$pkgdir/etc/modules-load.d/dell-smm-hwmon.conf"
   install -D -m644 $srcdir/i8kmon.service "$pkgdir/usr/lib/systemd/system/i8kmon.service"
-  # rmmod dell-smm-hwmon && modprobe dell-smm-hwmon
+  install -D -m644 $srcdir/restart-i8kmon.sh "$pkgdir/usr/lib/systemd/system-sleep/restart-i8kmon.sh"
 }
